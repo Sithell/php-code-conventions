@@ -250,7 +250,6 @@ class Bill {
 It is desirable to make models immutable, see [Working with objects](#Работа-с-объектами). If you want more flexibility, you can use [chain objects](#Использование-chain-объектов).
 
 ### 📖 Views
-Представлением в зависимости от требуемого ответа сервера может быть HTML-шаблон, API-объект или что-то иное. Обратите внимание, API-объект и модель данных это разные сущности, даже если у них совпадает название и все поля. Нельзя просто вернуть в JSON-ответе сервера модель из хранилища:
 A view can be an HTML template, an API object, or something else, depending on the desired server response. Please note that an API object and a data model are different entities, even if they have the same name and all fields. You can't just return a model from the store in the JSON response from the server:
 
 Bad:
