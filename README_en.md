@@ -39,7 +39,7 @@ This document contains code writing rules (Code Conventions) in the company Rois
 Work on English translation is in progress. You can help us a lot if you make pull request.
 Here you can always find an up to date version of our Code Conv, as we are regularly referring to it in our Code Review.
 
-You can read about our experience of using Code Conv in [our blog post at Habrahabr.com](https://habrahabr.ru/company/roistat/blog/352762/)
+You can read about our experience of using Code Conv in [our blog post at Habrahabr.ru](https://habrahabr.ru/company/roistat/blog/352762/)
 
 Code Conv — is a set of rules to follow when writing any kind of code. We treat Code Style and Code Conv separately. For us Code Style is purely visual side of code, e.g. placement of tabs, comas, parentheses, and others. Code Conv on the other hand is meaningful Summary of code, e.g. correct sequences of actions, fitting and meaningful variable and method names, correct overall code composition. Code Style is pretty easy to evaluate automatically, but checking Code Conv, in most cases, is a task only human can do.
 
@@ -69,7 +69,7 @@ Entropy is the amount of information that the project consists of (information c
 Principles are ways to uphold the values described above. They are a little more detailed, contain the main development methodologies and approaches that we are guided by.
 
 Code must:
-- Be understandable, obvious. Explicit is better than implicit. For example, magic methods should not be used. Also, you cannot use `exit` and any other statement that may terminate or change the operation of the process.
+- Be understandable and obvious. Explicit is better than implicit. For example, magic methods should not be used. Also, you cannot use `exit` and any other statement that may terminate or change the operation of the process.
 - Be convenient to use now.
 - Be convenient for future use.
 - Strive to comply with the following principles: [KISS](https://en.wikipedia.org/wiki/KISS_principle)), [SOLID](https://en.wikipedia.org/wiki/SOLID)), [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), [GRASP](https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)).
@@ -77,7 +77,7 @@ Code must:
 - Be easily automatically refactored in an IDE (for example, Find usages and Rename in PHPStorm); i.e., it must be linked by typing and PHPDocs.
 - Not be stored in the database (even the names of classes, variables and constants), as this makes automatic refactoring impossible.
 - Consistent. The code must be read from top to bottom. The reader should not keep something in mind, go back and interpret the code differently. For example, you should avoid back loops `do {} while ();`.
-- Must have minimal [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity).
+- Have minimal [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity).
 
 ## **General Rules**
 
