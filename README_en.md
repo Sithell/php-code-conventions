@@ -82,7 +82,7 @@ Code must:
 ## **General Rules**
 
 ### 📖 Unused code is forbidden
-Если код можно убрать, и работа системы от этого не изменится, его быть не должно.
+If a fragment of code can be removed without changing the operation of the system, then it should not exist.
 
 Bad:
 ```php
@@ -103,15 +103,15 @@ finalizeData($data);
 ```
 
 ### 📖 Functions of specific PHP version should not be used, if they can be avoided
-Это упростит миграцию кода на новую версию языка. Часто в новой версии языка удаляются какие-либо функции или изменяется их работа. Чем меньше идет завязки на язык и его версию, тем лучше.
+This will make it easier to migrate code to a newer version of the language. Often a new version removes features or changes how they work. The less dependency on the language and its version, the better.
 
-Специфичные функции всегда лучше использовать через функции-обёртки внутри проекта. Тогда в случае миграции придется исправлять одно место, а не тысячу.
+Specific functions are always best used via wrapper functions within a project. Then, in the case of migration, you will have to fix one place, not a thousand.
 
-Как понять, можно ли использовать встроенную в PHP функцию или нет?
+How to understand if a PHP built-in function can be used or not?
 
-- Если эта функция уже используется повсеместно в проекте, значит, её можете использовать и вы. Например, это может быть `explode`/`implode`. Если эти функции будут изменены в новой версии PHP, то в любом случае придется переделать много кода и делать это будет автоматика.
+- If this function is already used throughout the project, then you can use it too. For example, it could be `explode`/`implode`. If these functions are changed in the new version of PHP, then a lot of code will have to be refactored anyway and it will be done automatically.
 
-- Если эта функция не используется или используется только через обёртку в специализированном сервисе, то и вы использовать её можете только через обёртку (добавляется при необходимости).
+- If this function is not used or is used only through a wrapper in a specialized service, then you can use it only through a wrapper (added if necessary).
 
 Bad:
 ```php
@@ -132,7 +132,7 @@ $urlParts = $urlService->parseUrl($url);
 ```
 
 ### 📖 Instead of the missing scalar value use null
-0 и пустую строку нельзя использовать в качестве показателя отсутствия значения.
+0 and an empty string cannot be used as an indication of the absence of a value.
 ```php
 /**
  * @param string $title
@@ -150,7 +150,7 @@ $object->sendEmail('Title', null, '2017-01-01');
 $object->sendEmail('Title', '', '2017-01-01');
 ```
 
-Однако, это правило не относится к массивам.
+However, this rule does not apply to arrays.
 
 Bad:
 ```php
@@ -166,16 +166,16 @@ Good:
 deleteUsersByIds([], true);
 ```
 
-Итого: использование пустой строки почти всегда является ошибкой.
+All in all: using an empty string is almost always a mistake.
 
 **[⬆ up](#Summary)**
 
 ## **Rules of business-logic splitting**
 
-### 📖 Сервисы
-Сервис – это класс без состояния, содержащий бизнес-логику. Данные для обработки сервис получает либо в виде параметров публичных методов, либо других сервисов. 
+### 📖 Services
+A service is a stateless class containing business logic. A service receives data for processing either in the form of parameters of public methods or other services.
 
-Сервис не может использовать в качестве источника данных глобальные переменные или окружение:
+A service cannot use global variables or the environment as a data source:
 
 Bad:
 ```php
@@ -220,17 +220,17 @@ class User {
     }
 }
 ```
-Однако, это правило не работает, если получение данных из внешних источников — единственная бизнес-логика сервиса.
+However, this rule does not work if getting data from external sources is the only business logic of the service.
 
-Для работы с хранилищем мы используем репозиторий. Это частный случай сервиса, но он получает данные из БД через адаптеры.
+To work with the database, we use a repository. This is a special case of a service, but it receives data from the database through adapters.
 
-### 📖 Контроллеры
-Контроллер принимает и обрабатывает запросы. Он получает параметры на вход, запрашивает данные из сервисов и возвращает представление.
+### 📖 Controllers
+A controller accepts and processes requests. It receives input parameters, requests data from services, and returns a view.
 
-### 📖 Модели
-Модель — простой объект со свойствами, не содержащий никакой другой бизнес-логики, кроме геттеров и сеттеров. Геттер — метод, позволяющий получить какую-то информацию из внутреннего состояния объекта. Это не обязательно поле, как оно есть. Он может брать значения нескольких полей и делать простые манипуляции с ними (не запрашивая внешней продуктовой бизнес-логики). Сеттер — аналогично может изменять внутреннее состояние одного или нескольких полей без запросов «наружу».
+### 📖 Models
+A model is a simple object with properties that does not contain any other business logic other than getters and setters. A getter is a method that allows you to get some information from the internal state of an object. It's not necessarily a field as it is. It can take the values of several fields and do simple manipulations with them (without requesting external product business logic). Setter - similarly, it can change the internal state of one or more fields without "out" requests.
 
-Условный упрощенный пример:
+Simplified example:
 
 ```php
 class Bill {
@@ -247,10 +247,11 @@ class Bill {
 }
 ```
 
-Желательно делать модели неизменяемыми, см. [Работа с объектами](#Работа-с-объектами). Хотите больше гибкости — можно использовать [chain-объекты](#Использование-chain-объектов).
+It is desirable to make models immutable, see [Working with objects](#Работа-с-объектами). If you want more flexibility, you can use [chain objects](#Использование-chain-объектов).
 
-### 📖 Представления
+### 📖 Views
 Представлением в зависимости от требуемого ответа сервера может быть HTML-шаблон, API-объект или что-то иное. Обратите внимание, API-объект и модель данных это разные сущности, даже если у них совпадает название и все поля. Нельзя просто вернуть в JSON-ответе сервера модель из хранилища:
+A view can be an HTML template, an API object, or something else, depending on the desired server response. Please note that an API object and a data model are different entities, even if they have the same name and all fields. You can't just return a model from the store in the JSON response from the server:
 
 Bad:
 ```php
@@ -260,7 +261,7 @@ public function actionUsers(): Response {
 }
 ```
 
-Свойства модели хранилища могут поменяться из-за новых технических требований, но объект API это продукт, вы должны изменять его явно:
+The properties of the data model may change due to new technical requirements, but the API object is the product, you must change it explicitly:
 
 Good:
 ```php
