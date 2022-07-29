@@ -72,7 +72,7 @@ Code must:
 - Be understandable and obvious. Explicit is better than implicit. For example, magic methods should not be used. Also, you cannot use `exit` and any other statement that may terminate or change the operation of the process.
 - Be convenient to use now.
 - Be convenient for future use.
-- Strive to comply with the following principles: [KISS](https://en.wikipedia.org/wiki/KISS_principle)), [SOLID](https://en.wikipedia.org/wiki/SOLID)), [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), [GRASP](https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)).
+- Strive to comply with the following principles: [KISS](https://en.wikipedia.org/wiki/KISS_principle), [SOLID](https://en.wikipedia.org/wiki/SOLID), [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), [GRASP](https://en.wikipedia.org/wiki/GRASP_(object-oriented_design).
 - Have low coupling and high cohesion (this is described in detail in GRASP). Any part of the system must have isolated logic and, if necessary, an external interface that allows you to work with this logic. Any internal part must be able to be changed without any damage to external systems.
 - Be easily automatically refactored in an IDE (for example, Find usages and Rename in PHPStorm); i.e., it must be linked by typing and PHPDocs.
 - Not be stored in the database (even the names of classes, variables and constants), as this makes automatic refactoring impossible.
