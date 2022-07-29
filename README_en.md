@@ -39,45 +39,45 @@ This document contains code writing rules (Code Conventions) in the company Rois
 Work on English translation is in progress. You can help us a lot if you make pull request.
 Here you can always find an up to date version of our Code Conv, as we are regularly referring to it in our Code Review.
 
-О нашем опыте использования Code Conv вы можете прочитать в [статье на Хабре](https://habrahabr.ru/company/roistat/blog/352762/).
+You can read about our experience of using Code Conv in [our blog post at Habrahabr.com](https://habrahabr.ru/company/roistat/blog/352762/)
 
 Code Conv — is a set of rules to follow when writing any kind of code. We treat Code Style and Code Conv separately. For us Code Style is purely visual side of code, e.g. placement of tabs, comas, parentheses, and others. Code Conv on the other hand is meaningful Summary of code, e.g. correct sequences of actions, fitting and meaningful variable and method names, correct overall code composition. Code Style is pretty easy to evaluate automatically, but checking Code Conv, in most cases, is a task only human can do.
 
-Обратите внимание: Code Style в примерах может отличаться от Code Style вашего проекта. Придерживаться надо тому Code Style, который принят у вас. Code Conv не об этом. 
+Please note: Code Style in the examples may differ from the Code Style of your project. It is necessary to stick to the Code Style that is adopted by your team. Code Conv is not about that.
 
 ## **Goals**
-The main goal of Code Conv — сохранение низкой стоимости разработки и поддержки кода на длинной дистанции.
+The main goal of Code Conv — keeping the cost of development low and maintaining the code in the long run.
 
-Основные ценности, помогающие достичь этой цели:
+
+Core values to help achieve this goal:
 
 **Readability**
 
-Код должен легко читаться, а не легко записываться. Это значит, что такие вещи как синтаксический сахар (если он направлен на ускорение записи, а не дальнейшего чтения кода) вредны.
-Обратите внимание, что быстродействие кода не является ценностью, поэтому не самый оптимальный цикл, но удобный для понимания, будет лучше, чем быстрый, но сложный. Не нужно экономить переменные, буквы для их названий, оперативную память и так далее.
+Code should be easy to read, not easy to write. This means that such things as syntactic sugar (if it is aimed at speeding up writing, not further reading of code) is harmful.
+Please note that code efficiency is not a value, so a less than optimal loop, but easy to understand, will be better than a fast, but complex one. No need to save variables, letters for their names, RAM, and so on.
 
 **Vandalproof**
 
-Код надо писать так, чтобы у разработчика, который с ним будет работать, было как можно меньше возможности внести ошибку. Например, покрывайте тестами не только краевые условия, но и кейсы, которые могут появиться в результате доработок кода и рефакторинга.
+Code should be written in such a way that the developer who will work with it has as little opportunity as possible to introduce an error. For example, when writing tests cover not only boundary cases, but also the ones that may appear as a result of code improvements and refactoring.
 
 **Maintaining the lowest entropy**
 
-Энтропия — это количество информации, из которой состоит проект (информационная емкость проекта). Код проекта должен выполнять продуктовые требования с сохранением наименьшей возможной энтропии. 
+Entropy is the amount of information that the project consists of (information capacity of the project). The project code must fulfill the product requirements while maintaining the lowest possible entropy.
 
 ## **Principles**
 
-Принципы — это способы соблюдения описанных выше ценностей. Они чуть более детальны, содержат основные методологии разработки и подходы, которыми мы руководствуемся. 
+Principles are ways to uphold the values described above. They are a little more detailed, contain the main development methodologies and approaches that we are guided by.
 
-Код должен быть:
-
-- Понятным, явным. Явное лучше, чем неявное. Например, не должны использоваться магические методы. Также нельзя использовать `exit` и любые другие операторы, которые могут завершить или изменить работу процесса. 
-- Удобным для использования сейчас
-- Удобным для использования в будущем
-- Должен стремиться к соблюдению принципов [KISS](https://ru.wikipedia.org/wiki/KISS_(%D0%BF%D1%80%D0%B8%D0%BD%D1%86%D0%B8%D0%BF)), [SOLID](https://ru.wikipedia.org/wiki/SOLID_(%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BD%D0%BE-%D0%BE%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5)), [DRY](https://ru.wikipedia.org/wiki/Don%E2%80%99t_repeat_yourself), [GRASP](https://ru.wikipedia.org/wiki/GRASP)
-- Код должен обладать низкой связанностью и высокой связностью (подробно это описано в GRASP). Любая часть системы должна иметь изолированную логику и при надобности внешний интерфейс, который позволяет с этой логикой работать. Любая внутренняя часть должна иметь возможность быть измененной без какого-либо ущерба внешним системам
-- Код должен быть таким, чтобы его можно было автоматически отрефакторить в IDE (например, Find usages и Rename в PHPStorm). То есть должен быть слинкован типизацией и PHPDoc'ами
-- В БД не должны храниться части кода (даже названия классов, переменных и констант), так как это делает невозможным автоматический рефакторинг
-- Последовательным. Код должен читаться сверху вниз. Читающий не должен держать что-то в уме, возвращаться назад и интерпретировать код иначе. Например, надо избегать обратных циклов `do {} while ();` 
-- Должен иметь минимальную [цикломатическую сложность](https://ru.wikipedia.org/wiki/%D0%A6%D0%B8%D0%BA%D0%BB%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%81%D0%BB%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%8C)
+Code must:
+- Be understandable, obvious. Explicit is better than implicit. For example, magic methods should not be used. Also, you cannot use `exit` and any other statement that may terminate or change the operation of the process.
+- Be convenient to use now.
+- Be convenient for future use.
+- Strive to comply with the following principles: [KISS](https://en.wikipedia.org/wiki/KISS_principle)), [SOLID](https://en.wikipedia.org/wiki/SOLID)), [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself), [GRASP](https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)).
+- Have low coupling and high cohesion (this is described in detail in GRASP). Any part of the system must have isolated logic and, if necessary, an external interface that allows you to work with this logic. Any internal part must be able to be changed without any damage to external systems.
+- Be easily automatically refactored in an IDE (for example, Find usages and Rename in PHPStorm); i.e., it must be linked by typing and PHPDocs.
+- Not be stored in the database (even the names of classes, variables and constants), as this makes automatic refactoring impossible.
+- Consistent. The code must be read from top to bottom. The reader should not keep something in mind, go back and interpret the code differently. For example, you should avoid back loops `do {} while ();`.
+- Must have minimal [cyclomatic complexity](https://en.wikipedia.org/wiki/Cyclomatic_complexity).
 
 ## **General Rules**
 
